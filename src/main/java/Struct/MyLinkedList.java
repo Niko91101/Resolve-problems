@@ -59,6 +59,10 @@ public class MyLinkedList {
         }
     }
 
+    public int size() {
+        return size;
+    }
+
     public String toString() {
         int[] result = new int[size];
 

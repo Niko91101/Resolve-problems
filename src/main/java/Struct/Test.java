@@ -1,20 +1,33 @@
 package Struct;
 
+import java.util.*;
+
 public class Test {
     public static void main(String[] args) {
 
-        MyLinkedList myLinkedList = new MyLinkedList();
+        // 1 -> [... .. ... .. ...]
+        // 2 -> [ ... .. ... .. ...]
 
-        myLinkedList.add(3);
-        myLinkedList.add(5);
-        myLinkedList.add(7);
+        Map<Integer, String> hashMap = new HashMap<>();
+        Map<Integer, String> linkedHashMap = new LinkedHashMap<>();
+        Map<Integer, String> treeMap = new TreeMap<>();
 
-        System.out.println(myLinkedList);
+        //testMap(hashMap);
+        //testMap(linkedHashMap);
+        testMap(treeMap);
 
-        myLinkedList.remove(1);
+    }
 
-        System.out.println(myLinkedList);
-        myLinkedList.remove(1);
-        System.out.println(myLinkedList);
+    public static void testMap(Map<Integer, String> map) {
+        map.put(39, "Bob");
+        map.put(12, "Mike");
+        map.put(78, "Tom");
+        map.put(0, "Tim");
+        map.put(1500, "Lewis");
+        map.put(7, "Bob");
+
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
     }
 }
