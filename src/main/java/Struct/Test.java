@@ -1,32 +1,20 @@
 package Struct;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class Test {
     public static void main(String[] args) {
 
-        List<Integer> linkedList = new LinkedList<>();
-        List<Integer> arrayList = new ArrayList<>();
-        //
+        MyLinkedList myLinkedList = new MyLinkedList();
 
-        // [1] -> [2] -> [3]
-        measureTime(linkedList);
-        measureTime(arrayList);
+        myLinkedList.add(3);
+        myLinkedList.add(5);
+        myLinkedList.add(7);
 
+        System.out.println(myLinkedList);
+
+        myLinkedList.remove(1);
+
+        System.out.println(myLinkedList);
+        myLinkedList.remove(1);
+        System.out.println(myLinkedList);
     }
-
-    private static void  measureTime(List<Integer> list) {
-        long start = System.currentTimeMillis();
-
-        for (int i = 0; i < 1_000_00; i++) {
-            list.add(0, i);
-        }
-        long end = System.currentTimeMillis();
-
-        System.out.println(end - start);
-    }
-
-
 }

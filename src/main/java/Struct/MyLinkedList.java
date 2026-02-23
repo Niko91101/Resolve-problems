@@ -1,10 +1,10 @@
 package Struct;
 
+import java.util.Arrays;
+
 public class MyLinkedList {
     private int size;
     private Node head;
-
-
 
     public void add(int value) {
         //если это первое добавление в список
@@ -17,10 +17,56 @@ public class MyLinkedList {
             while (temp.getNext() != null) {
                 temp = temp.getNext();
             }
+            temp.setNext(new Node(value));
         }
-
         size++;
     }
+
+    public int get(int index) {
+        int currentIndex = 0;
+        Node temp = head;
+
+        while (temp != null) {
+            if (currentIndex == index) {
+                return temp.getValue();
+            } else {
+                temp = temp.getNext();
+                currentIndex++;
+            }
+        }
+        throw new IllegalArgumentException("Индекс находится за пределами связанного списка");
+    }
+
+    public void remove(int index) {
+        int currentIndex = 0;
+        Node temp = head;
+
+        while (temp != null) {
+            if ((currentIndex + 1) == index) {
+                temp.setNext(temp.getNext().getNext());
+                size--;
+                return;
+            } else {
+                temp = temp.getNext();
+                currentIndex++;
+            }
+        }
+    }
+
+    public String toString() {
+        int[] result = new int[size];
+
+        int index = 0;
+        Node temp = head;
+
+        while (temp != null) {
+            result[index++] = temp.getValue();
+            temp = temp.getNext();
+        }
+        return Arrays.toString(result);
+    }
+
+
     private static class Node {
         private int value;
 
@@ -45,6 +91,5 @@ public class MyLinkedList {
         }
 
         private Node next;
-
     }
 }
