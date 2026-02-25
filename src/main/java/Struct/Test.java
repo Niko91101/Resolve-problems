@@ -1,62 +1,38 @@
 package Struct;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Test {
     public static void main(String[] args) {
+        Person person1 = new Person(1);
+        Person person2 = new Person(2);
+        Person person3 = new Person(3);
+        Person person4 = new Person(4);
 
-        List<Person> peopleList = new ArrayList<>();
-        Set<Person> peopleSet = new TreeSet<>();
+        Queue<Person> people = new ArrayBlockingQueue<Person>(3);
+        System.out.println(people.offer(person4));;
+        System.out.println(people.offer(person1));;
+        System.out.println(people.offer(person2));;
+        System.out.println(people.offer(person3));;
 
-        addElements(peopleList);
-        addElements(peopleSet);
 
-        System.out.println(peopleList);
-        System.out.println(peopleSet);
-    }
 
-    private static void addElements(Collection collection) {
-        collection.add(new Person(1, "Bob"));
-        collection.add(new Person(2, "Tom"));
-        collection.add(new Person(3, "Katy"));
-        collection.add(new Person(4, "George"));
+
     }
 }
 
-class Person implements Comparable<Person> {
+class Person {
     private int id;
-    private String name;
 
-    public Person(int id, String name) {
+    public Person(int id) {
         this.id = id;
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Person person = (Person) o;
-        return id == person.id && Objects.equals(name, person.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + Objects.hashCode(name);
-        return result;
-    }
-
-    @Override
-    public int compareTo(Person o) {
-        return Integer.compare(o.name.length(), this.name.length());
     }
 
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 '}';
     }
 }
