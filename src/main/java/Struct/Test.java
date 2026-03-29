@@ -1,33 +1,35 @@
 package Struct;
 
-import java.util.*;
+
+import java.util.Scanner;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        MyThread myThread = new MyThread();
+        myThread.start();
 
-        Stack<Integer> stack = new Stack<>();
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
 
-        stack.push(5);
-        stack.push(3);
-        stack.push(1);
+        myThread.shutdown();
 
-        while (!stack.isEmpty()) {
-            System.out.println(stack.pop());
-        }
     }
 }
 
-class Person {
-    private int id;
-
-    public Person(int id) {
-        this.id = id;
+class MyThread extends  Thread {
+    private volatile boolean running = true;
+    public void run() {
+        while (running) {
+            System.out.println("Hello!");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                '}';
+    public void shutdown() {
+        running = false;
     }
 }
