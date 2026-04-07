@@ -3,68 +3,46 @@ package Struct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class DeadlockExample {
 
     public static void main(String[] args) throws InterruptedException {
-        int[] array1 = new int[10];
-        List<Integer> list1 = new ArrayList<>();
-
-        fillArr(array1);
-        fillList(list1);
-
-        //map
-        array1 = Arrays.stream(array1)
-                .map(x -> x * 2)
-                .toArray();
-
-        list1 = list1.stream()
-                .map(x -> x * 2)
-                .collect(Collectors.toList());
-
-        //filter
+//
+//        Predicate<String> predicate = name -> name.startsWith("A");
 
 
-//        System.out.println(Arrays.toString(array1));
-//        System.out.println(list1);
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
 
-        int[] array2 = new int[10];
-        List<Integer> list2 = new ArrayList<>();
+        Function<Integer, Integer> function = number -> number * number;
+        Function<Integer, String> functionIntToString = n -> "Number: " + n;
 
-        fillArr(array2);
-        fillList(list2);
-
-        array2 = Arrays.stream(array2)
-                .filter(x -> x % 2 == 0)
-                .toArray();
-
-        //System.out.println(Arrays.toString(array2));
-
-        //forEach
-
-        //reduce
-
-        //
-
-        int result = Arrays.stream(array2)
-                .reduce((acc, b) -> acc + b)
-                .orElse(-1);
-
-        System.out.println(result);
-
+        List<String> words = Arrays.asList("Anna", "Bob", "Alex", "Brad", "Alice");
+        System.out.println(byLengthThenAlphabet(words));
 
     }
 
-    private static void fillArr(int[] array) {
-        for (int i = 0; i < 10; i++) {
-            array[i] = i + 1;
-        }
+    public static List<String> filterList(List<String> list, Predicate<String> predicate) {
+        return list.stream()
+                .filter(predicate)
+                .toList();
     }
 
-    private static void fillList(List<Integer> list) {
-        for (int i = 0; i < 10; i++) {
-            list.add(i + 1);
-        }
+
+    public static <T, R> List<R> transformList(List<T> list, Function<T, R> function) {
+        return list.stream()
+                .map(function)
+                .toList();
+    }
+
+    public static List<String> byLengthThenAlphabet(List<String> list) {
+        return list.stream()
+                .sorted((s1, s2) -> {
+                    int cmp = s1.length() - s2.length();
+                    if (cmp != 0) return cmp;
+                    return s1.compareTo(s2);
+                })
+                .toList();
     }
 }
