@@ -1,34 +1,69 @@
 package resolve_problems;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) {
-//        List<Integer> numbers = Arrays.asList(10, 20, 30, 40, 50);
-//
-//        Consumer<Integer> consumer = System.out::println;
-//
-//        Problem.forEachWithDelay(numbers, consumer, 5000);
+        List<Person> people = List.of(
+                new Person("Alice", "Moscow", 25),
+                new Person("Bob", "Moscow", 30),
+                new Person("Charlie", "SPb", 22),
+                new Person("Diana", "Kazan", 28),
+                new Person("Eve", "SPb", 35)
+        );
 
-//        Supplier<Integer> randomSupplier = () -> new Random().nextInt(100) + 1;
-//
-//        int[] next = {1};
-//        Supplier<Integer> sequentialSupplier = () -> next[0]++;
-//
-//        System.out.println(Problem.generateList(randomSupplier, 100));
-//        System.out.println(Problem.generateList(sequentialSupplier, 100));
+        Map<String, List<Person>> byCity = Person.groupingByCity(people);
 
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Predicate<Integer> isEven = num -> num % 2 == 0;
-        Function<Integer, Integer> sqrt = num -> num * num;
+        byCity.forEach((city, persons) -> {
+            System.out.println(city + ": " + persons.stream().map(Person::getName).collect(Collectors.joining(", ")));
+        });
 
-        numbers.stream()
-                .filter(isEven)
-                .map(sqrt)
-                .forEach(System.out::println);
+        Map<String, Long> countingPeopleByCity = people.stream()
+                .collect(Collectors.groupingBy(Person::getCity, Collectors.counting()));
+
+        System.out.println(countingPeopleByCity);
+    }
+}
+
+class Person {
+    private String name;
+    private String city;
+    private int age;
+    public Person(String name, String city, int age) {
+        this.name = name;
+        this.city = city;
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public static Map<String, List<Person>> groupingByCity(List<Person> people) {
+        return people.stream()
+                .collect(Collectors.groupingBy(Person::getCity));
     }
 }
