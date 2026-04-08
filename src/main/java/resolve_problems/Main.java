@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Main {
@@ -14,12 +16,21 @@ public class Main {
 //
 //        Problem.forEachWithDelay(numbers, consumer, 5000);
 
-        Supplier<Integer> randomSupplier = () -> new Random().nextInt(100) + 1;
+//        Supplier<Integer> randomSupplier = () -> new Random().nextInt(100) + 1;
+//
+//        int[] next = {1};
+//        Supplier<Integer> sequentialSupplier = () -> next[0]++;
+//
+//        System.out.println(Problem.generateList(randomSupplier, 100));
+//        System.out.println(Problem.generateList(sequentialSupplier, 100));
 
-        int[] next = {1};
-        Supplier<Integer> sequentialSupplier = () -> next[0]++;
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Predicate<Integer> isEven = num -> num % 2 == 0;
+        Function<Integer, Integer> sqrt = num -> num * num;
 
-        System.out.println(Problem.generateList(randomSupplier, 100));
-        System.out.println(Problem.generateList(sequentialSupplier, 100));
+        numbers.stream()
+                .filter(isEven)
+                .map(sqrt)
+                .forEach(System.out::println);
     }
 }
