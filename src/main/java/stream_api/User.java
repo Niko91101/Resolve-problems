@@ -6,6 +6,7 @@ import java.util.Optional;
 public class User {
     private int id;
     private String name;
+    private Optional<Address> address = Optional.empty();
 
     public int getId() {
         return id;
@@ -13,6 +14,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public Optional<Address> getAddress() {
+        return address;
     }
 
     public User(int id, String name) {
@@ -27,5 +32,13 @@ public class User {
                 .filter(user -> user.getId() == id)
                 .findFirst();
 
+    }
+
+    public static Optional<String> getCity(User user) {
+        if (user == null) return Optional.empty();
+
+        return Optional.ofNullable(user)
+                .flatMap(User::getAddress)
+                .flatMap(Address::getCity);
     }
 }
