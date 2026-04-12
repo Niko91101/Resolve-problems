@@ -1,9 +1,6 @@
 package stream_api;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -25,9 +22,18 @@ public class Main {
 
         int result = numbers.stream()
                 .filter(num -> num % 2 == 0)
-                .reduce(2, Integer::sum);
+                .mapToInt(Integer::intValue)
+                .sum();
 
-        System.out.println(result);
+        List<String> words = List.of(
+                "яблоко", "банан", "апельсин",
+                "груша", "киви", "манго"
+        );
 
+        String word = words.stream()
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(() -> new RuntimeException("Список пустой"));
+
+        System.out.println(word);
     }
 }
