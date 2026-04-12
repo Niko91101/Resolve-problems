@@ -1,35 +1,33 @@
 package stream_api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-
-        List<User> users = List.of(
-                new User(1, "Alice"),
-                new User(2, "Bob"),
-                new User(3, "Charlie"),
-                new User(4, "Diana")
+        List<String> names = List.of(
+                "Алексей", "Анна", "Борис",
+                "Андрей", "Виктор", "Алина"
         );
 
-        User.findUserById(users, 4)
-                .ifPresentOrElse(
-                        user -> System.out.println(user.getName().toUpperCase()),
-                        () -> System.out.println("User not found")
-                );
-    }
+        List<String> namesStartsWithA = names.stream()
+                .filter(name -> name.startsWith("А"))
+                .sorted()
+                .toList();
 
-    private static Optional<Integer> safeToInt(String s) {
-        if (s == null) return Optional.empty();
+        System.out.println(namesStartsWithA);
 
-        try {
-            return Optional.of(Integer.parseInt(s));
-        } catch (NumberFormatException e) {
-            return Optional.empty();
-        }
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        int result = numbers.stream()
+                .filter(num -> num % 2 == 0)
+                .reduce(2, Integer::sum);
+
+        System.out.println(result);
+
     }
 }
